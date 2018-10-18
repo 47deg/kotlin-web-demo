@@ -33,7 +33,7 @@ sudo apt install -y gradle
 
 gradle wrapper
 
-git clone https://github.com/47deg/try.arrow-kt.io
+git clone https://github.com/arrow-kt/try.arrow-kt.io
 
 cd try.arrow-kt.io/
 
