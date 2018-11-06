@@ -115,13 +115,21 @@ dependencies {
     library group: 'io.arrow-kt', name: 'arrow-annotations-processor', version: arrowKtVersion
 
     library group: 'io.arrow-kt', name: 'arrow-free', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-instances-free', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-mtl', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-effects', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-effects-instances', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-effects-rx2', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-effects-instances', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-effects-reactor', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-effects-reactor-instances', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-effects-kotlinx-coroutines', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-effects-kotlinx-coroutines-instances', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-optics', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-generic', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-recursion', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-instances-recursion', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-integration-retrofit-adapter', version: arrowKtVersion
 
     compile fileTree(dir: projectDir.toString() + File.separator + "kotlin", include: '*.jar')
 }
