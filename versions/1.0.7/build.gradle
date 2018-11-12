@@ -80,6 +80,7 @@ dependencies {
     library group: 'io.arrow-kt', name: 'arrow-recursion', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-instances-recursion', version: arrowKtVersion
     library group: 'io.arrow-kt', name: 'arrow-integration-retrofit-adapter', version: arrowKtVersion
+    library group: 'io.arrow-kt', name: 'arrow-query-language', version: arrowKtVersion
 
     compile fileTree(dir: projectDir.toString() + File.separator + "kotlin", include: '*.jar')
 }
