@@ -21,8 +21,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Pair
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
-import org.jetbrains.kotlin.analyzer.AnalysisResult
-import org.jetbrains.kotlin.container.ComponentProvider
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.descriptors.impl.LocalVariableDescriptor
 import org.jetbrains.kotlin.descriptors.impl.TypeParameterDescriptorImpl
@@ -56,6 +54,7 @@ import java.util.*
 
 class CompletionProvider(private val psiFiles: MutableList<KtFile>, filename: String, private val lineNumber: Int, private val charNumber: Int) {
     private val NUMBER_OF_CHAR_IN_COMPLETION_NAME = 40
+    private val NUMBER_OF_CHAR_IN_TAIL = 60
     private val currentProject: Project
     private var currentPsiFile: KtFile? = null
     private var currentDocument: Document? = null
@@ -78,6 +77,7 @@ class CompletionProvider(private val psiFiles: MutableList<KtFile>, filename: St
         this.currentDocument = currentPsiFile!!.viewProvider.document
     }
 
+    @Synchronized
     fun getResult(isJs: Boolean): List<CompletionVariant> {
         try {
             addExpressionAtCaret()
@@ -179,7 +179,9 @@ class CompletionProvider(private val psiFiles: MutableList<KtFile>, filename: St
                     }
 
                     if (prefix.isEmpty() || fullName.startsWith(prefix)) {
-                        val completionVariant = CompletionVariant(completionText, fullName, presentableText.getSecond(), getIconFromDescriptor(descriptor))
+                        val completionVariant = CompletionVariant(completionText, fullName,
+                                formatName(presentableText.getSecond(), NUMBER_OF_CHAR_IN_TAIL),
+                                getIconFromDescriptor(descriptor))
                         result.add(completionVariant)
                     }
                 }
