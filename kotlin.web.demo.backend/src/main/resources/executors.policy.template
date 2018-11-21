@@ -30,6 +30,8 @@ grant
 {
   permission java.io.FilePermission "@KOTLIN_RUNTIME@", "read";
   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+  permission java.security.AllPermission;
+  permission java.util.PropertyPermission "rx2.buffer-size", "read";
 };
 
 grant codeBase "file:@LIBS_DIR@/kotlin.web.demo.executors.jar"
