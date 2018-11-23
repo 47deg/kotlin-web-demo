@@ -32,13 +32,3 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo apt install -y gradle
 
 gradle wrapper
-
-git clone https://github.com/47deg/try.arrow-kt.io
-
-cd try.arrow-kt.io/
-
-sh gradlew
-
-mkdir ./docker/frontend/war/
-
-mkdir ./docker/backend/war/

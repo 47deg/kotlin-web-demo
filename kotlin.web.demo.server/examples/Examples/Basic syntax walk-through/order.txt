@@ -1,7 +1,0 @@
-Use a conditional expression
-Null-checks
-is-checks and smart casts
-Use a while-loop
-Use a for-loop
-Use ranges and in
-Use when

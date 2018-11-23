@@ -7,4 +7,4 @@ before_script:
 - chmod 400 ./try.arrow-kt.pem
 
 script:
-- ssh -o "StrictHostKeyChecking no" -q -i ./try.arrow-kt.pem $EC2 'cd try.arrow-kt.io; sh deploy.sh; exit'
+- ssh -o "StrictHostKeyChecking no" -q -i ./try.arrow-kt.pem $EC2 'cd try.arrow-kt.io/try.arrow-kt.web; sh deploy.sh; exit'

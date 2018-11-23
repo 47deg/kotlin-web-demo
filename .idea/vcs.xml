@@ -3,5 +3,8 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/kotlin-web-demo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/try.arrow-kt.io" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/try.arrow-kt.web" vcs="Git" />
   </component>
 </project>

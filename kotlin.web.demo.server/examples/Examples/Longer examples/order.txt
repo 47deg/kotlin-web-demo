@@ -1,4 +1,0 @@
-99 Bottles of Beer.kt
-Life.kt
-Maze.kt
-HTML Builder.kt

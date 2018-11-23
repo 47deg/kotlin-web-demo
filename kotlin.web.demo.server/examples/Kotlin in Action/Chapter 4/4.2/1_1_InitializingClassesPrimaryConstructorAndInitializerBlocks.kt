@@ -1,3 +1,0 @@
-package ch04.ex2_1_1_InitializingClassesPrimaryConstructorAndInitializerBlocks
-
-class User(val nickname: String)
