@@ -14,6 +14,8 @@ sudo cp .travis.yml ./try.arrow-kt.web
 
 sudo cp ./cert/* ./try.arrow-kt.web/docker/frontend/conf
 
+sudo cp server.xml ./try.arrow-kt.web/docker/frontend/conf
+
 for i in ./try.arrow-kt.web/versions/*/build.gradle
 do
    awk 'FNR==1{print ""}1' arrow-dependencies >> $i
