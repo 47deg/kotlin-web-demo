@@ -1,0 +1,1 @@
+ADD war/WebDemoBackend.war /usr/local/tomcat/webapps/ROOT.war

@@ -1,2 +1,0 @@
-Reference to a function
-Composition of functions
