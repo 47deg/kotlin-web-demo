@@ -49,6 +49,10 @@ sudo mv ./kotlin.web.demo.backend/build/libs/WebDemoBackend.war ./docker/backend
 
 sudo docker-compose down
 
+sudo docker system prune -a -f
+
+sudo docker volume rm $(sudo docker volume ls -qf dangling=true)
+
 sudo docker-compose build
 
 sudo docker-compose up -d
