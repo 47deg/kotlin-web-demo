@@ -3,7 +3,7 @@ branches:
    - master
 
 before_script:
-- openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./.secret -out ./try.arrow-kt.pem -d -a
+- openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./deploy/.secret -out ./try.arrow-kt.pem -d -a
 - chmod 400 ./try.arrow-kt.pem
 
 script:
