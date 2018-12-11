@@ -35,7 +35,7 @@ mkdir docker/frontend/war/
 
 mkdir docker/backend/war/
 
-export ARROW_VERSION=$(cat arrow/arrowKtVersion)
+export ARROW_VERSION=$(cat arrowKtVersion)
 
 sh gradlew ::copyKotlinLibs
 
