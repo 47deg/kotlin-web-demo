@@ -4,8 +4,6 @@ rm -rf try.arrow-kt.web
 
 git clone https://github.com/JetBrains/kotlin-web-demo try.arrow-kt.web
 
-cd try.arrow-kt.web
-
 sudo cp deploy/docker-compose.yml ./try.arrow-kt.web
 
 sudo cp arrow/arrowKtVersion ./try.arrow-kt.web
