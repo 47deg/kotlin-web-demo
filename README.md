@@ -56,7 +56,7 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 [comment]: # (Start Copyright)
 # Copyright
 
-sbt-org-policies is designed and developed by 47 Degrees
+try.arrow-kt.io is designed and developed by 47 Degrees
 
 Copyright (C) 2018 47 Degrees. <http://47deg.com>
 
