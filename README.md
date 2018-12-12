@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/47deg/try.arrow-kt.io.svg?branch=master)](https://travis-ci.org/47deg/try.arrow-kt.io)
+
 This repository contains the scripts and necessary files to deploy [Try Arrow](https://try.arrow-kt.io:80) in an AWS EC2 instance.
 
 Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-demo) project and modifies it to include the [Arrow](https://github.com/arrow-kt/arrow) library and to provide it the ability to be automatically deployed in an AWS EC2 instance using [Travis CI](https://travis-ci.org). 
