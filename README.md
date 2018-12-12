@@ -1,50 +1,44 @@
-[![official JetBrains project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+This repository contains the scripts and necessary files to deploy [Try Arrow](https://try.arrow-kt.io:80) in an AWS EC2 instance.
 
-This repository contains sources for [try.kotl.in]( http://try.kotlinlang.org/)
+Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-demo) project and modifies it to include the [Arrow](https://github.com/arrow-kt/arrow) library and to provide it the ability to be automatically deployed in an AWS EC2 instance using [Travis CI](https://travis-ci.org). 
 
-## Manual installation :whale:
-Before starting the Kotlin-Web-Demo execute two gradle tasks: `copyKotlinLibs` for downloading kotlin libraries for compiler and
-`war` for building war-archive from IDE or terminal:
-```bash
-$ gradlew ::copyKotlinLibs
-$ gradlew war
-```
+## Project structure:
 
-By default `try.kotl.in` uses port 8080, and if that's OK, just make it available at `http://localhost:8080` via this command:
-
-```bash
-$ docker-compose up
-```
-
-To change the port number, tweak 'docker-compose.yml':
-
-```bash
-    ports:
-      - "your_port:8080"
-```
-
-If you'd like to log in to JetBrains account, Google, Facebook, GitHub, or Twitter, add corresponding keys to
-this [configuration file](https://github.com/JetBrains/kotlin-web-demo/blob/master/docker/frontend/conf/Catalina/localhost/ROOT.xml):
-
-```xml
-    <Environment name="github_key" value="YOUR-KEY" type="java.lang.String" override="false"/>
-    <Environment name="github_secret" value="YOUR-SECRET-KEY" type="java.lang.String" override="false"/>
-```
+- The main scripts that do all the "hard work" are `setup.sh` and `deploy.sh`:
+  - The `setup.sh` script is intended to install in the instance all the necessary software (docker, docker-compose, gradle, ...) to deploy the projec. It will have to be run only once. 
+  - The `deploy.sh` script will be run every time a new deployment is triggered and will take care of download the required version of Try Kotlin, modify it, compile the project, clean up the instance and, using docker-compose, build and start the containers. 
+- `arrow` directory contains the following files:
+  - `arrow-dependencies`: Includes the Arrow library's dependencies that will be inserted in the `build.gradle` files of each Kotlin's compiler version.
+  - `arrow-executors-policy`: Contains some Java Security Policies needed to run code from the Arrow docs and will be included in the `executors.policy.template` file. 
+  - `arrow-repositories`: The Arrow repositories to download the library from. This will be also inserte in all `build.gradle` files inside Kotlin's compiler versions.
+  - `arrowKtVersion`: The Arrow version used during the deployment.
+- `deploy` directory with the following files:
+  - `.secret`: This is an encrypted certificate file that will be decrypted inside Travis CI, using the right key, and that will be used to connect via ssh with the AWS EC2 instance.
+  - `docker-compose`: Will build and start the three container (`frontend`, `backend` and `db`).
+  - `web-demo-backend` and `web-demo-war`: The contain from this files will be added to the `backend` and `frontend` Dockerfiles to make to the Tomcat servers, that will be running in each of this containers, use our own war files compiled including the Arrow library.  
+- `.travis.yml` will allow Travis CI to decrypt a certificate file using the appropriate key, it will connect via ssh to the AWS EC2 instance and trigger a new deployment using the `deploy.sh` script.
+  
 ## Deploy to AWS:
 
-- Create instance in ec2 console (Ubuntu Server, t2.large recommended with 16 GB storage)
-- Download private key and save as `try-arrow-kt.pem` file (or other name of you choice)
+### Initial setup:
+
+- Create a [AWS VPC](https://aws.amazon.com/vpc) in the [VPC Dashboard](https://console.aws.amazon.com/vpc) to allow your instance to send and receive traffic from the Internet.
+- Create an AWS EC2 instance in [EC2 console](https://console.aws.amazon.com/ec2) (Ubuntu Server, t2.large recommended with 16 GB storage), choosing your previously created VPC in the `Network` option.
+- Download the generated private key and save as `try-arrow-kt.pem` file (or some other name of you choice)
 - ```cp try-arrow-kt.pem ~/.ssh```
 - ```chmod 400 ~/.ssh/try-arrow-kt.pem```
-- Copy setup.sh: ```scp setup.sh <user>@<instance's public dns>:```
+- `git clone` this project in your machine.
+- Copy the `setup.sh` file from this project to your instance using: ```scp setup.sh <user>@<instance's public dns>:```
 - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
-- Run ```sh setup.sh```
+- Run ```sh setup.sh``` to set up your instance for the deployment.
 
-- For a manual deployment:
+### Deployment:
+
+- You can trigger a manual deployment just connecting to the instance via ssh and running:
     - ```cd try.arrow-kt```
     - run ```sh deploy.sh```
 
-- For an automatic deployment with `travis`:
+- To set up an automatic deployment with `Travis CI`:
     - Go back to your local machine and run:
     - ```export TRAVIS_CI_SECRET=`cat /dev/urandom | head -c 10000 | openssl sha1` ```
     - ```openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./.secret -a```
@@ -56,78 +50,12 @@ this [configuration file](https://github.com/JetBrains/kotlin-web-demo/blob/mast
        - openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./.secret -out ./try-arrow-kt.pem -d -a
        - chmod 400 ./try-arrow-kt.pem```
 
-## Deploy to AWS using docker-machine and docker-compose:
 
- - Install docker in your localhost. [Installation link](https://docs.docker.com/engine/installation/)
- - Install docker-machine in your localhost. [Installation link](https://docs.docker.com/machine/install-machine/)
- - Set up your AWS credentials in your localhost. [docker-machine + aws](https://docs.docker.com/machine/drivers/aws/)
- - Create AWS EC2 instance only the first time:
- ```bash
-docker-machine create --driver amazonec2 <your-instance-name>
- ```
- - Connect to your AWS EC2 instance using:
-```bash
-docker-machine ssh <your-instance-name>
-```
- - We recommend to use ```screen -D -RR```
- - Clone this repo:
-```bash
-git clone https://github.com/dominv/kotlin-web-demo
-```
- - Go to kotlin-web-demo directory and run ```sh deploy.sh``` script.
- - When it finishes, run:
-```bash
-sudo docker-compose build
-```
- - And finally:
- ```bash
- sudo docker-compose up
- ```
+[comment]: # (Start Copyright)
+# Copyright
 
-## How to add your own courses :memo:
+sbt-org-policies is designed and developed by 47 Degrees
 
-  - Add a course name to [manifest.json](https://github.com/JetBrains/kotlin-web-demo/tree/master/kotlin.web.demo.server/examples).
-  - Use that name to create a folder next to the [Examples folder](https://github.com/JetBrains/kotlin-web-demo/tree/master/kotlin.web.demo.server/examples)
-  and put your course content under it.
-  - Make a folder for each of the course topics (and don't forget adding them to `manifest.json`).
-  - After that, create:
-     1. Test.kt — for test questions
-     2. Task.kt — for preview
-     3. Solution.kt — for answers to the test questions
-     4. task.md - tasks descriptions
-     5. manifest.json - to store 'junit' [configuration](https://github.com/JetBrains/kotlin-web-demo/blob/master/kotlin.web.demo.server/examples/Kotlin%20Koans/Introduction/Hello%2C%20world!/manifest.json)
+Copyright (C) 2018 47 Degrees. <http://47deg.com>
 
-   See [Kotlin-Koans](https://github.com/JetBrains/kotlin-web-demo/tree/master/kotlin.web.demo.server/examples/Kotlin%20Koans) for examples.
-
-## How to add your dependencies to kotlin compiler :books:
-
-Just put whatever you need as dependencies to [gradle.build](https://github.com/JetBrains/kotlin-web-demo/blob/master/versions/1.1.60/build.gradle) via gradle task called `library`:
-
-```gradle
- library "your dependency"
-```
-
-NOTE: If the library you're adding uses reflection, accesses the file system, or performs any other type of security-sensitive operations, don't forget to
-configure the [executors.policy.template](https://github.com/JetBrains/kotlin-web-demo/blob/master/kotlin.web.demo.backend/src/main/resources/executors.policy.template)
-in `web-demo-backend`. [Click here](https://docs.oracle.com/javase/7/docs/technotes/guides/security/PolicyFiles.html) for more information about *Java Security Police*
-
-**How to set Java Security Police in `executors.policy.template`**
-
-If you want to configure a custom dependency, use the marker `@WRAPPERS_LIB@`:
-
-```
-grant codeBase "file:@WRAPPERS_LIB@/junit-4.12.jar" {
-  permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
-  permission java.lang.RuntimePermission "setIO";
-  permission java.io.FilePermission "<<ALL FILES>>", "read";
-  permission java.lang.RuntimePermission "accessDeclaredMembers";
-};
-```
-
-## Feedback and Issue reporting :construction_worker:
-
-We're constantly working on making it easier to add your own courses to `try.kotl.in` and would appreciate ideas, suggestions,
-and other feedback, so if you have any, please [use our issue tracker](https://youtrack.jetbrains.com/issues/KT#newissue=25-1925867) to share it with us.
-
-And, of course, if you have any bug reports, you can [file them as well](https://youtrack.jetbrains.com/issues/KT#newissue=25-1925867)
-If you need any help with compiling or running the project locally, join the `#kontributors` channel in the [Kotlin Slack](http://slack.kotlinlang.org), and we'll be happy to help you out.
+[comment]: # (End Copyright)
