@@ -8,16 +8,16 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 
 - The main scripts that do all the "hard work" are `setup.sh` and `deploy.sh`:
   - The `setup.sh` script is intended to install in the instance all the necessary software (docker, docker-compose, gradle, ...) to deploy the project. It will have to be run only once. 
-  - The `deploy.sh` script will be run every time a new deployment is triggered and will take care of download the required version of Try Kotlin, modify it, compile the project, clean up the instance and, using docker-compose, build and start the containers. 
+  - The `deploy.sh` script will be executed every time a new deployment is triggered and will take care of downloading the required version of Try Kotlin, modifying it, compiling the project, cleanig the instance up and, using docker-compose, building and starting the containers. 
 - `arrow` directory contains the following files:
   - `arrow-dependencies`: Includes the Arrow library's dependencies that will be inserted in the `build.gradle` files of each Kotlin's compiler version.
   - `arrow-executors-policy`: Contains some Java Security Policies needed to run code from the Arrow docs and will be included in the `executors.policy.template` file. 
-  - `arrow-repositories`: The Arrow repositories to download the library from. This will be also inserte in all `build.gradle` files inside Kotlin's compiler versions.
+  - `arrow-repositories`: The Arrow repositories where to download the libraries. This will be also inserted in all `build.gradle` files inside Kotlin's compiler versions.
   - `arrowKtVersion`: The Arrow version used during the deployment.
 - `deploy` directory with the following files:
   - `.secret`: This is an encrypted certificate file that will be decrypted inside Travis CI, using the right key, and that will be used to connect via ssh with the AWS EC2 instance.
-  - `docker-compose`: Will build and start the three container (`frontend`, `backend` and `db`).
-  - `web-demo-backend` and `web-demo-war`: The contain from this files will be added to the `backend` and `frontend` Dockerfiles to make to the Tomcat servers, that will be running in each of this containers, use our own war files compiled including the Arrow library.  
+  - `docker-compose`: Will build and start the three containers (`frontend`, `backend` and `db`).
+  - `web-demo-backend` and `web-demo-war`: The content from these files will be added to the `backend` and `frontend` Docker files to make to the Tomcat servers, that will be running in each of these containers, using our own war files compiled including the Arrow library.  
 - `.travis.yml` will allow Travis CI to decrypt a certificate file using the appropriate key, it will connect via ssh to the AWS EC2 instance and trigger a new deployment using the `deploy.sh` script.
   
 ## Deploy to AWS:
