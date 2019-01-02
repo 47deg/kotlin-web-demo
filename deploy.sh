@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+git checkout master
+
+git pull
+
 rm -rf try.arrow-kt.web
 
 git clone https://github.com/JetBrains/kotlin-web-demo try.arrow-kt.web
