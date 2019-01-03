@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-git checkout master
-
-git pull
-
 rm -rf try.arrow-kt.web
 
 git clone https://github.com/JetBrains/kotlin-web-demo try.arrow-kt.web
@@ -21,7 +17,13 @@ sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 curl -s https://api.bintray.com/search/packages\?name\=arrow\&repo\=arrow-kt |
  python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join(obj[0]['system_ids']);" |
   awk 'BEGIN{print "dependencies {\n\tdef arrowKtVersion = System.getenv('\''ARROW_VERSION'\'')\n"};
-  {gsub("io.arrow-kt:", ""); $0 = "\tlibrary group: '\''io.arrow-kt'\'', name: '\''"$0"'\'', version: arrowKtVersion"; print}
+  {
+    gsub("io.arrow-kt:", "");
+    if ($0 != "ank-core" && $0 != "ank-gradle-plugin" && $0 != "arrow-effects-test" && $0 != "arrow-instances" && $0 != "arrow-weak") {
+        $0 = "\tlibrary group: '\''io.arrow-kt'\'', name: '\''"$0"'\'', version: arrowKtVersion";
+        print;
+    }
+  }
   END{print "\n\tcompile fileTree(dir: projectDir.toString() + File.separator + \"kotlin\", include: '\''*.jar'\'')\n}"}' > arrow/arrow-dependencies
 
 for i in try.arrow-kt.web/versions/*/build.gradle
