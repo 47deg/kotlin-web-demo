@@ -18,22 +18,25 @@ sudo cp cert/* try.arrow-kt.web/docker/frontend/conf
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
-curl -s https://api.bintray.com/search/packages\?name\=arrow\&repo\=arrow-kt |
- python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join(obj[0]['system_ids']);" |
-  awk 'BEGIN{print "dependencies {\n\tdef arrowKtVersion = System.getenv('\''ARROW_VERSION'\'')\n"};
-  {
-    gsub("io.arrow-kt:", "");
-    if ($0 != "ank-core" && $0 != "ank-gradle-plugin" && $0 != "arrow-effects-test" && $0 != "arrow-instances" && $0 != "arrow-weak") {
+curl -s https://oss.jfrog.org/api/storage/oss-snapshot-local/io/arrow-kt |
+   python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join([item['uri'] for item in obj['children']]);" |
+  awk 'gsub("/", "");' > arrow/arrow-full-dependencies
+awk 'NR==FNR{a[$0];next} !($0 in a)' arrow/arrow-deprecated-dependencies arrow/arrow-full-dependencies |
+awk 'BEGIN{print "dependencies {\n\tdef arrowKtVersion = System.getenv('\''ARROW_VERSION'\'')\n"};
+    {
         $0 = "\tlibrary group: '\''io.arrow-kt'\'', name: '\''"$0"'\'', version: arrowKtVersion";
         print;
     }
-  }
-  END{print "\n\tcompile fileTree(dir: projectDir.toString() + File.separator + \"kotlin\", include: '\''*.jar'\'')\n}"}' > arrow/arrow-dependencies
+    END{print "\n\tcompile fileTree(dir: projectDir.toString() + File.separator + \"kotlin\", include: '\''*.jar'\'')\n}"}' > arrow/arrow-dependencies
+
+rm -rf arrow/arrow-full-dependencies
 
 for i in try.arrow-kt.web/versions/*/build.gradle
 do
    awk 'FNR==1{print ""}1' arrow/arrow-dependencies >> $i
 done
+
+rm -rf arrow/arrow-dependencies
 
 awk 'FNR==1{print ""}1' arrow/arrow-repositories >> try.arrow-kt.web/build.gradle
 

@@ -1,0 +1,16 @@
+ank-core
+ank-gradle-plugin
+arrow-effects-test
+arrow-instances
+arrow-data
+arrow-effects-rx2
+arrow-instances-core
+arrow-instances-data
+arrow-effects-instances
+arrow-effects-rx2-instances
+arrow-effects-kotlinx-coroutines-instances
+arrow-effects-reactor-instances
+arrow-instances-free
+arrow-instances-recursion
+arrow-data-instances-effects
+arrow-weak
