@@ -39,9 +39,9 @@ git clone https://github.com/47deg/try.arrow-kt.io.git
 
 sudo apt-get install -y software-properties-common
 
-sudo add-apt-repository universe
+sudo add-apt-repository -y universe
 
-sudo add-apt-repository ppa:certbot/certbot
+sudo add-apt-repository -y ppa:certbot/certbot
 
 sudo apt-get update
 
