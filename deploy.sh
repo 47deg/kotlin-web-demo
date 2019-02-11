@@ -18,7 +18,7 @@ sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
-curl -s https://oss.jfrog.org/api/storage/oss-snapshot-local/io/arrow-kt |
+curl -s https://api.bintray.com/search/packages\?name\=arrow\&repo\=arrow-kt |
    python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join([item['uri'] for item in obj['children']]);" |
   awk 'gsub("/", "");' > arrow/arrow-full-dependencies
 awk 'NR==FNR{a[$0];next} !($0 in a)' arrow/arrow-deprecated-dependencies arrow/arrow-full-dependencies |
