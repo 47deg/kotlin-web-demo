@@ -34,3 +34,21 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo apt install -y gradle
 
 gradle wrapper
+
+git clone https://github.com/47deg/try.arrow-kt.io.git
+
+sudo apt-get install -y software-properties-common
+
+sudo add-apt-repository universe
+
+sudo add-apt-repository ppa:certbot/certbot
+
+sudo apt-get update
+
+sudo apt-get install -y certbot
+
+arrowVersion=`cat try.arrow-kt.io/arrow/arrowKtVersion | tr -d .`
+
+domain="try-$arrowVersion.arrow-kt.io"
+
+sudo certbot certonly --standalone -d $domain
