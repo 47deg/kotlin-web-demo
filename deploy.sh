@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-git checkout master
-
-git pull
-
 rm -rf try.arrow-kt.web
 
 git clone https://github.com/JetBrains/kotlin-web-demo try.arrow-kt.web
@@ -14,7 +10,7 @@ sudo cp arrow/arrowKtVersion try.arrow-kt.web
 
 sudo cp deploy/.secret try.arrow-kt.web
 
-sudo cp cert/* try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
