@@ -47,8 +47,8 @@ sudo apt-get update
 
 sudo apt-get install -y certbot
 
-arrowVersion=`cat try.arrow-kt.io/arrow/arrowKtVersion | tr -d .`
+echo "Please introduce the domain's name you want to generate the certificate for"
 
-domain="try-$arrowVersion.arrow-kt.io"
+read domain
 
 sudo certbot certonly --standalone -d $domain
