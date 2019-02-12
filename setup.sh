@@ -47,7 +47,7 @@ sudo apt-get update
 
 sudo apt-get install -y certbot
 
-mkdir cert
+mkdir try.arrow-kt.io/cert
 
 echo "Please, introduce the domain's name you want to generate the certificate for:"
 
@@ -55,7 +55,6 @@ read domain
 
 sudo certbot certonly --standalone -d $domain
 
-sudo cp /etc/letsencrypt/live/$domain/cert.pem cert/
-sudo cp /etc/letsencrypt/live/$domain/chain.pem cert/
-sudo cp /etc/letsencrypt/live/$domain/fullchain.pem cert/
-sudo cp /etc/letsencrypt/live/$domain/privkey.pem cert/
+sudo cp -r /etc/letsencrypt/live/$domain/* try.arrow-kt.io/cert/
+
+echo "If the copy of the files fail because certbot has saved them in a different directory, you will need to copy them manually to try.arrow-kt.io/cert/"
