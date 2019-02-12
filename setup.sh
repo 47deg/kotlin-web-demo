@@ -47,8 +47,15 @@ sudo apt-get update
 
 sudo apt-get install -y certbot
 
-echo "Please introduce the domain's name you want to generate the certificate for"
+mkdir cert
+
+echo "Please, introduce the domain's name you want to generate the certificate for:"
 
 read domain
 
 sudo certbot certonly --standalone -d $domain
+
+sudo cp /etc/letsencrypt/live/$domain/cert.pem cert/
+sudo cp /etc/letsencrypt/live/$domain/chain.pem cert/
+sudo cp /etc/letsencrypt/live/$domain/fullchain.pem cert/
+sudo cp /etc/letsencrypt/live/$domain/privkey.pem cert/

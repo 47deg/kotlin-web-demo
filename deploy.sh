@@ -14,7 +14,10 @@ sudo cp arrow/arrowKtVersion try.arrow-kt.web
 
 sudo cp deploy/.secret try.arrow-kt.web
 
-sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/cert.pem -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/chain.pem -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/fullchain.pem -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/privkey.pem -r try.arrow-kt.web/docker/frontend/conf
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
