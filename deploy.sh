@@ -17,8 +17,8 @@ sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
 curl -s https://api.bintray.com/search/packages\?name\=arrow\&repo\=arrow-kt |
-   python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join(obj[0]['system_ids']);" |
-  awk 'gsub("/", "");' > arrow/arrow-full-dependencies
+ python -c "import json,sys;obj=json.load(sys.stdin);print '\n'.join(obj[0]['system_ids']);" |
+  awk 'gsub("io.arrow-kt:", "");' > arrow/arrow-full-dependencives
 awk 'NR==FNR{a[$0];next} !($0 in a)' arrow/arrow-deprecated-dependencies arrow/arrow-full-dependencies |
 awk 'BEGIN{print "dependencies {\n\tdef arrowKtVersion = System.getenv('\''ARROW_VERSION'\'')\n"};
     {
