@@ -15,3 +15,11 @@ arrow-instances-recursion
 arrow-data-instances-effects
 arrow-weak
 arrow-examples
+arrow-annotations-processor
+arrow-core
+arrow-effects
+arrow-effects-kotlinx-coroutines
+arrow-free
+arrow-dagger-effects-kotlinx-coroutines
+arrow-effects-reactor
+arrow-recursion
