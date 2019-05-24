@@ -1,6 +1,15 @@
-ank-core
 ank-gradle-plugin
+arrow-annotations-processor
+arrow-core
+arrow-dagger-effects-kotlinx-coroutines
+arrow-effects
+arrow-effects-kotlinx-coroutines
+arrow-effects-kotlinx-coroutines-data
+arrow-effects-kotlinx-coroutines-extensions
+arrow-effects-reactor
 arrow-effects-test
+arrow-extras
+arrow-free
 arrow-instances
 arrow-data
 arrow-effects-rx2
@@ -15,3 +24,5 @@ arrow-instances-recursion
 arrow-data-instances-effects
 arrow-weak
 arrow-examples
+arrow-recursion
+ank-core
