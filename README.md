@@ -8,7 +8,7 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 
 - The main scripts that do all the "hard work" are `setup.sh` and `deploy.sh`:
   - The `setup.sh` script is intended to install in the instance all the necessary software (docker, docker-compose, gradle, ...) to deploy the project. It will have to be run only once. 
-  - The `deploy.sh` script will be executed every time a new deployment is triggered and will take care of downloading the required version of Try Kotlin, modifying it, compiling the project, cleanig the instance up and, using docker-compose, building and starting the containers. 
+  - The `deploy.sh` script will be executed every time a new deployment is triggered and will take care of downloading the required version of Try Kotlin, modifying it, compiling the project, cleaning the instance up and, using docker-compose, building and starting the containers. 
 - `arrow` directory contains the following files:
   - `arrow-dependencies`: Includes the Arrow library's dependencies that will be inserted in the `build.gradle` files of each Kotlin's compiler version.
   - `arrow-executors-policy`: Contains some Java Security Policies needed to run code from the Arrow docs and will be included in the `executors.policy.template` file. 
