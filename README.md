@@ -29,16 +29,17 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 - Download the generated private key and save as `try-arrow-kt.pem` file (or some other name of you choice)
 - ```cp try-arrow-kt.pem ~/.ssh```
 - ```chmod 400 ~/.ssh/try-arrow-kt.pem```
-- `git clone` this project in your machine.
+- Clone this project in your machine with `git clone git@github.com:47deg/try.arrow-kt.io.git`.
 - Copy the `setup.sh` file from this project to your instance using: ```scp setup.sh <user>@<instance's public dns>:```
 - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
-- Run ```sh setup.sh``` to set up your instance for the deployment.
+- Run ```sh setup.sh``` to set up your EC2 instance for the deployment.
 
 ### Deployment:
 
 - You can trigger a manual deployment just connecting to the instance via ssh and running:
-    - ```cd try.arrow-kt```
-    - run ```sh deploy.sh```
+    - Copy the `deploy.sh` file from this project to your instance using: ```scp deploy.sh <user>@<instance's public dns>:```
+    - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
+    - run ```sh deploy.sh``` in the EC2 instance.
 
 - To set up an automatic deployment with `Travis CI`:
     - Go back to your local machine and run:
