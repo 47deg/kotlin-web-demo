@@ -14,7 +14,7 @@ sudo cp arrow/arrowKtVersion try.arrow-kt.web
 
 sudo cp deploy/.secret try.arrow-kt.web
 
-sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf #TODO: There is no cert dir right now.
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
