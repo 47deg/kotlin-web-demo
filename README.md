@@ -36,10 +36,11 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 
 ### Deployment:
 
-- You can trigger a manual deployment, copying this repo and then connecting to the instance via ssh:
+- You can trigger a manual deployment by copying this repo to EC2 and then connecting to the instance via ssh:
+    - ```cd try.arrow-kt.io```
     - ```scp -i  ~/.ssh/try-arrow-kt.pem -r * user@<instance' public dns>:try.arrow-kt.io```
     - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
-    - run ```sh deploy.sh``` in the EC2 instance.
+    - run ```cd try.arrow-kt.io; sh deploy.sh``` in the EC2 instance.
 
 - To set up an automatic deployment with `Travis CI`:
     - Go back to your local machine and run:

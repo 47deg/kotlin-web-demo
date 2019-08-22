@@ -70,7 +70,7 @@ sudo docker-compose down
 
 sudo docker system prune -a -f
 
-sudo docker volume rm $(sudo docker volume ls -qf dangling=true)
+sudo docker volume rm $(sudo docker volume ls -qf dangling=true)  #TODO: This command failed. It does not seem to affect the final build.
 
 sudo docker-compose build
 
