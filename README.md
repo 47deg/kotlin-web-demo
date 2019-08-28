@@ -45,7 +45,7 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 - To set up an automatic deployment with `Travis CI`:
     - Go back to your local machine and run:
     - ```export TRAVIS_CI_SECRET=`cat /dev/urandom | head -c 10000 | openssl sha1` ```
-    - ```openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./.secret -a```
+    - ```openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./deploy/.secret -a```
     - Commit `.secret` file and upload changes.
     - Create env var in travis for `$TRAVIS_CI_SECRET`
     - Create env var in travis for `$EC2 = <user>@<instance's public dns>`
