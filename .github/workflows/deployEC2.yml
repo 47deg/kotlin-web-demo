@@ -16,6 +16,6 @@ jobs:
       run: |
         export BRANCH=$(echo ${{ github.event.action }} | cut -f1 -d':')
         export COMMIT=$(echo ${{ github.event.action }} | cut -f2 -d':')
-        openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./deploy/.secret -out ./try.arrow-kt.pem -d -a -nopad
+        openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./deploy/.secret -out ./try.arrow-kt.pem -d -a
         chmod 400 ./try.arrow-kt.pem
         ssh -o "StrictHostKeyChecking no" -q -i ./try.arrow-kt.pem $EC2 'cd try.arrow-kt.io; sh deploy.sh $BRANCH $COMMIT; exit'
