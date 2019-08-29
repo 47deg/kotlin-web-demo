@@ -2,24 +2,24 @@
 
 This repository contains the scripts and necessary files to deploy [Try Arrow](https://try.arrow-kt.io:80) in an AWS EC2 instance.
 
-Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-demo) project and modifies it to include the [Arrow](https://github.com/arrow-kt/arrow) library and to provide it the ability to be automatically deployed in an AWS EC2 instance using [Travis CI](https://travis-ci.org). 
+Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-demo) project and modifies it to include the [Arrow](https://github.com/arrow-kt/arrow) library and to provide it the ability to be automatically deployed in an AWS EC2 instance using [Travis CI](https://travis-ci.org).
 
 ## Project structure:
 
 - The main scripts that do all the "hard work" are `setup.sh` and `deploy.sh`:
-  - The `setup.sh` script is intended to install in the instance all the necessary software (docker, docker-compose, gradle, ...) to deploy the project. It will have to be run only once. 
-  - The `deploy.sh` script will be executed every time a new deployment is triggered and will take care of downloading the required version of Try Kotlin, modifying it, compiling the project, cleaning the instance up and, using docker-compose, building and starting the containers. 
+  - The `setup.sh` script is intended to install in the instance all the necessary software (docker, docker-compose, gradle, ...) to deploy the project. It will have to be run only once.
+  - The `deploy.sh` script will be executed every time a new deployment is triggered and will take care of downloading the required version of Try Kotlin, modifying it, compiling the project, cleaning the instance up and, using docker-compose, building and starting the containers.
 - `arrow` directory contains the following files:
   - `arrow-dependencies`: Includes the Arrow library's dependencies that will be inserted in the `build.gradle` files of each Kotlin's compiler version.
-  - `arrow-executors-policy`: Contains some Java Security Policies needed to run code from the Arrow docs and will be included in the `executors.policy.template` file. 
+  - `arrow-executors-policy`: Contains some Java Security Policies needed to run code from the Arrow docs and will be included in the `executors.policy.template` file.
   - `arrow-repositories`: The Arrow repositories where to download the libraries. This will be also inserted in all `build.gradle` files inside Kotlin's compiler versions.
   - `arrowKtVersion`: The Arrow version used during the deployment.
 - `deploy` directory with the following files:
   - `.secret`: This is an encrypted certificate file that will be decrypted inside Travis CI, using the right key, and that will be used to connect via ssh with the AWS EC2 instance.
   - `docker-compose`: Will build and start the three containers (`frontend`, `backend` and `db`).
-  - `web-demo-backend` and `web-demo-war`: The content from these files will be added to the `backend` and `frontend` Docker files to make to the Tomcat servers, that will be running in each of these containers, using our own war files compiled including the Arrow library.  
+  - `web-demo-backend` and `web-demo-war`: The content from these files will be added to the `backend` and `frontend` Docker files to make to the Tomcat servers, that will be running in each of these containers, using our own war files compiled including the Arrow library.
 - `.travis.yml` will allow Travis CI to decrypt a certificate file using the appropriate key, it will connect via ssh to the AWS EC2 instance and trigger a new deployment using the `deploy.sh` script.
-  
+
 ## Deploy to AWS:
 
 ### Initial setup:
@@ -51,6 +51,17 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
     ```before_script
        - openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ./.secret -out ./try-arrow-kt.pem -d -a
        - chmod 400 ./try-arrow-kt.pem```
+
+
+- To set up an automatic deployment with `GitHub Actions`:
+    - Go back to your local machine and run:
+    - ```export ACTION_CI_SECRET=`cat /dev/urandom | head -c 10000 | openssl dgst -sha1 -binary | xxd -p```
+
+    - ```openssl aes-256-cbc -pass "pass:$ACTION_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./deploy/.secret-action -a -nopad```
+    - Commit `.secret-action` file and upload changes.
+    - Create a Secret environment variable in GitHub Secrets for `$ACTION_CI_SECRET`
+    - Create a Secret environment variable in GitHub Secrets for  for `$EC2 = <user>@<instance's public dns>`
+    - These are used by the GitHub Action defined in .github/workflows/deployEC2.yml
 
 
 [comment]: # (Start Copyright)
