@@ -44,3 +44,9 @@ arrow-query-language
 arrow-recursion-extensions
 arrow-shadow
 arrow-typeclasses
+arrow-meta
+arrow-meta-compiler-plugin
+arrow-meta-compiler-plugin-all
+arrow-meta-docs
+arrow-meta-idea-plugin
+arrow-meta-testing-plugin
