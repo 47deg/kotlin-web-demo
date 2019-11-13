@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-git checkout master
-
 git pull
 
 rm -rf try.arrow-kt.web
