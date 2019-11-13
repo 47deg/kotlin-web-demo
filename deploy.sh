@@ -14,7 +14,7 @@ sudo cp arrow/arrowKtVersion try.arrow-kt.web
 
 sudo cp deploy/.secret try.arrow-kt.web
 
-sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf
+sudo cp cert/* -r try.arrow-kt.web/docker/frontend/conf #TODO: There is no cert dir right now.
 
 sudo cp server.xml try.arrow-kt.web/docker/frontend/conf
 
@@ -70,7 +70,7 @@ sudo docker-compose down
 
 sudo docker system prune -a -f
 
-sudo docker volume rm $(sudo docker volume ls -qf dangling=true)
+sudo docker volume rm $(sudo docker volume ls -qf dangling=true)  #TODO: This command failed. It does not seem to affect the final build.
 
 sudo docker-compose build
 

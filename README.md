@@ -29,21 +29,23 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 - Download the generated private key and save as `try-arrow-kt.pem` file (or some other name of you choice)
 - ```cp try-arrow-kt.pem ~/.ssh```
 - ```chmod 400 ~/.ssh/try-arrow-kt.pem```
-- `git clone` this project in your machine.
+- Clone this project in your machine with `git clone git@github.com:47deg/try.arrow-kt.io.git`.
 - Copy the `setup.sh` file from this project to your instance using: ```scp setup.sh <user>@<instance's public dns>:```
 - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
-- Run ```sh setup.sh``` to set up your instance for the deployment.
+- Run ```sh setup.sh``` to set up your EC2 instance for the deployment.
 
 ### Deployment:
 
-- You can trigger a manual deployment just connecting to the instance via ssh and running:
-    - ```cd try.arrow-kt```
-    - run ```sh deploy.sh```
+- You can trigger a manual deployment by copying this repo to EC2 and then connecting to the instance via ssh:
+    - ```cd try.arrow-kt.io```
+    - ```scp -i  ~/.ssh/try-arrow-kt.pem -r * user@<instance' public dns>:try.arrow-kt.io```
+    - ```ssh -i ~/.ssh/try-arrow-kt.pem <user>@<instance's public dns>```
+    - run ```cd try.arrow-kt.io; sh deploy.sh``` in the EC2 instance.
 
 - To set up an automatic deployment with `Travis CI`:
     - Go back to your local machine and run:
     - ```export TRAVIS_CI_SECRET=`cat /dev/urandom | head -c 10000 | openssl sha1` ```
-    - ```openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./.secret -a```
+    - ```openssl aes-256-cbc -pass "pass:$TRAVIS_CI_SECRET" -in ~/.ssh/try-arrow-kt.pem -out ./deploy/.secret -a```
     - Commit `.secret` file and upload changes.
     - Create env var in travis for `$TRAVIS_CI_SECRET`
     - Create env var in travis for `$EC2 = <user>@<instance's public dns>`
@@ -69,6 +71,6 @@ Try Arrow uses the [kotlin-web-demo](https://github.com/JetBrains/kotlin-web-dem
 
 try.arrow-kt.io is designed and developed by 47 Degrees
 
-Copyright (C) 2018 47 Degrees. <http://47deg.com>
+Copyright (C) 2019 47 Degrees. <http://47deg.com>
 
 [comment]: # (End Copyright)

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+mkdir try.arrow-kt.io
+
 sudo apt-get update
 
 sudo apt-get -y install \
